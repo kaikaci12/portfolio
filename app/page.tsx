@@ -113,13 +113,13 @@ const App = () => {
       name: "Back End Development and APIs",
       issuer: "freeCodeCamp",
       year: "2024",
-      link: "/backend_certificate.pdf", // Assuming this file is in the public folder
+      link: "https://drive.google.com/file/d/1Xx1VGnd53FZSxUM2P0bRxiGF6-3Ex65Y/view?usp=drive_link", // Assuming this file is in the public folder
     },
     {
       name: "CS50's Introduction to Programming with Python",
       issuer: "Harvard University",
       year: "2024",
-      link: "/cs50_certificate.pdf", // Assuming this file is in the public folder
+      link: "https://drive.google.com/file/d/1mji3MwUGWlAF-F5SSABdCCkxr57Dm6yl/view?usp=sharing", // Assuming this file is in the public folder
     },
   ];
 
