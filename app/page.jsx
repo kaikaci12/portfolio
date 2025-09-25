@@ -16,14 +16,127 @@ import {
 
 // HomePageContent component
 const HomePageContent = ({
+  featuredProject,
+  mobileProjects,
   webProjects,
   skills,
   education,
   certificates,
-  navigateToMobileApps,
 }) => {
   return (
     <>
+      {/* Featured Project Section (PETC) */}
+      {featuredProject && (
+        <section
+          id="featured"
+          className="mb-16 p-0 rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-gray-800"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="h-64 md:h-full">
+              <img
+                src={featuredProject.image}
+                alt={`${featuredProject.name} cover`}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://placehold.co/800x600/1f2937/ffffff?text=${encodeURIComponent(
+                    featuredProject.name
+                  )}`;
+                }}
+              />
+            </div>
+            <div className="p-6 flex flex-col justify-center">
+              <div className="inline-flex items-center text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400 mb-2">
+                Featured Project
+              </div>
+              <h2 className="text-3xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+                {featuredProject.name}
+              </h2>
+              <p className="text-lg leading-relaxed mb-6 text-gray-700 dark:text-gray-300">
+                {featuredProject.description}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                {featuredProject.link && (
+                  <a
+                    href={featuredProject.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium"
+                  >
+                    Visit Site <ExternalLink className="w-4 h-4 ml-2" />
+                  </a>
+                )}
+                {featuredProject.githubLink && (
+                  <a
+                    href={featuredProject.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium"
+                  >
+                    GitHub <Github className="w-4 h-4 ml-2" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Mobile Projects Section (moved to top) */}
+      <section
+        id="mobile-projects"
+        className="mb-16 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg"
+      >
+        <h2 className="text-3xl font-semibold mb-6 text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 pb-2">
+          Mobile Projects
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {mobileProjects.map((project, index) => (
+            <div
+              key={index}
+              className="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+            >
+              <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200 flex items-center">
+                <Smartphone className="w-6 h-6 mr-2 text-blue-500" /> {project.name}
+              </h3>
+              <div className="w-full h-48 bg-gray-200 dark:bg-gray-600 rounded-lg overflow-hidden mb-4">
+                <img
+                  src={project.introImage || project.screenshots[0]}
+                  alt={`${project.name} cover`}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = `https://placehold.co/400x300/CCCCCC/000000?text=Image+Not+Found`;
+                  }}
+                />
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3">{project.description}</p>
+              <div className="flex flex-wrap gap-4">
+                {project.githubLink && (
+                  <a
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                  >
+                    GitHub <Github className="w-4 h-4 ml-1" />
+                  </a>
+                )}
+                {project.apkLink && (
+                  <a
+                    href={project.apkLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                  >
+                    Download APK <Download className="w-4 h-4 ml-1" />
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
       {/* About Me Section */}
       <section
         id="about"
@@ -86,20 +199,35 @@ const HomePageContent = ({
               key={index}
               className="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
             >
+              {project.image && (
+                <div className="w-full h-48 bg-gray-200 dark:bg-gray-600 rounded-lg overflow-hidden mb-4">
+                  <img
+                    src={project.image}
+                    alt={`${project.name} cover`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `https://placehold.co/400x300/CCCCCC/000000?text=Image+Not+Found`;
+                    }}
+                  />
+                </div>
+              )}
               <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
                 {project.name}
               </h3>
               <p className="text-gray-700 dark:text-gray-300 mb-4">
                 {project.description}
               </p>
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline font-medium"
-              >
-                View Project <ExternalLink className="w-4 h-4 ml-1" />
-              </a>
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                >
+                  View Project <ExternalLink className="w-4 h-4 ml-1" />
+                </a>
+              )}
               {project.githubLink && (
                 <a
                   href={project.githubLink}
@@ -115,15 +243,6 @@ const HomePageContent = ({
         </div>
       </section>
 
-      {/* Link to Mobile Projects Page */}
-      <section className="mb-16 p-6 bg-blue-600 dark:bg-blue-800 rounded-lg shadow-md dark:shadow-lg text-center">
-        <button
-          onClick={navigateToMobileApps}
-          className="inline-flex items-center text-white text-xl font-semibold py-3 px-6 rounded-lg bg-blue-700 dark:bg-blue-900 hover:bg-blue-800 dark:hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          View All Mobile Projects <Smartphone className="w-6 h-6 ml-3" />
-        </button>
-      </section>
 
       {/* Certificates Section */}
       <section
@@ -472,6 +591,15 @@ const App = () => {
     setSelectedMobileApp(null); // Clear selected app when going to home
   };
 
+  const featuredProject = {
+    name: "PETC",
+    description:
+      "The first platform in Georgia where pets have their own profiles. Here, their owners can befriend each other and create a digital community where animals can socialize too",
+    image: "/petc/petc.png",
+    link: "https://apps.apple.com/us/app/petc-app/id6749932751",
+    githubLink: undefined,
+  };
+
   const webProjects = [
     {
       name: "Ellako- Freelance Project",
@@ -639,11 +767,12 @@ const App = () => {
       <main className="container mx-auto px-4 py-24 sm:py-32 max-w-4xl">
         {currentPage === "home" && (
           <HomePageContent
+            featuredProject={featuredProject}
+            mobileProjects={mobileProjects}
             webProjects={webProjects}
             skills={skills}
             education={education}
             certificates={certificates}
-            navigateToMobileApps={navigateToMobileApps}
           />
         )}
         {currentPage === "mobileApps" && (
